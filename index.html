@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Browser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #fafafa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header h1 {
+            font-size: 24px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .url-bar {
+            flex: 1;
+            padding: 8px 15px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .go-btn {
+            padding: 8px 20px;
+            background: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .go-btn:hover {
+            background: #1877f2;
+        }
+        .iframe-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #8e8e8e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📷 Instagram Browser</h1>
+        <input type="text" class="url-bar" id="urlBar" value="https://www.instagram.com" placeholder="Enter Instagram URL...">
+        <button class="go-btn" onclick="loadUrl()">Go</button>
+    </div>
+    <div class="iframe-container">
+        <div class="loading" id="loading">Loading Instagram...</div>
+        <iframe id="instagramFrame" src="https://www.instagram.com" onload="hideLoading()"></iframe>
+    </div>
+
+    <script>
+        function loadUrl() {
+            const url = document.getElementById('urlBar').value;
+            const frame = document.getElementById('instagramFrame');
+            const loading = document.getElementById('loading');
+
+            loading.style.display = 'block';
+
+            if (url.includes('instagram.com') || url.startsWith('https://')) {
+                frame.src = url;
+            } else {
+                frame.src = 'https://www.instagram.com/' + url;
+            }
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        document.getElementById('urlBar').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadUrl();
+            }
+        });
+    </script>
+</body>
+</html>
